@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<ul><form method="post">{% csrf_token %}
+	{% if form.errors.phone_number %}
+        <strong class="text text-danger">{{ form.errors.phone_number.as_text }}</strong>
+    {% endif %}
+	<input type="tel" name="phone_number" value="{{ order.phone_number }}" placeholder="Номер телефона"><br>
+	<input type ="text" name="first_name" value="{{ order.first_name }}" hiden="order.first_name" placeholder="Имя"><br>
+	<input type ="text" name="adress" value="{{ order.adress }}" placeholder="Адресс"><br>
+	<button type="submit" value="Подтвердить">Подтвердить</button>
+</form></ul>
+
+{% endblock %}	
