@@ -2,12 +2,13 @@
 
 {% block main %}
 
-</div>
+{% comment %} <div>
 	<ul>
 		{% for order in order_list %}
 			<li> Заказ № {{ order.id }}<br>
 				<br>
 			{% for dish in order.dishes.all %}
+      {{dish.dish.dish_img.url}}
 				{{ dish.name }} {{ dish.count }} {% widthratio dish.price 1 dish.count %} - <a href="/changeinstance/{{ dish.id }}/">редактировать</a><br>
 			{% endfor %}
 				<br>
@@ -18,7 +19,56 @@
 			дата заказа: {{ order.date_create }}<br></li>
 			<br>
 			<p><a href="/makeorder/{{ order.id }}/"><button>оформить заказ</button></a></p>
-		{% endfor %}
-		
+		{% endfor %}		
 	</ul>
-{% endblock %}
+</div> {% endcomment %}
+<div class="container">
+    		<div class="row justify-content-center mb-5 pb-3 mt-5 pt-5">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+            <h2 class="mb-4">{% for order in order_list %} 
+            Заказ № {{ order.id }}
+            {% endfor %}</h2>
+            <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
+          </div>
+        </div>
+<div class="row">
+{% for order in order_list %}
+    <div class="col-md-6">
+      {% for dish in order.dishes.all %}
+      <div class="pricing-entry d-flex ftco-animate">
+        <div class="img" style="background-image: url({{ dish.dish.dish_img.url }});"></div>
+          <div class="desc pl-3">
+            <div class="d-flex text align-items-center">
+              <h3><span>{{dish.name}}</span></h3>
+              <span class="price">{% widthratio dish.price 1 dish.count %}.00</span>
+            </div>
+			<div class="d-block">
+				<p>Количество: {{ dish.count }}</p>
+			</div>
+          </div>
+        </div>
+    {% endfor %}
+	{% for drink in order.drinks.all %}
+      <div class="pricing-entry d-flex ftco-animate">
+        <div class="img" style="background-image: url({{ drink.drink.drink_img.url }});"></div>
+          <div class="desc pl-3">
+            <div class="d-flex text align-items-center">
+              <h3><span>{{ drink.name }}</span></h3>
+              <span class="price">{% widthratio drink.price 1 drink.count %}.00</span>
+            </div>
+			<div class="d-block">
+				<p>Количество: {{ drink.count }}</p>
+			</div>
+          </div>
+        </div>
+    {% endfor %}
+    	сумма заказа: {{ order.full_price }} uah<br>
+			дата заказа: {{ order.date_create }}<br>
+			<br>
+			<p><a href="/makeorder/{{ order.id }}/"><button class="btn btn-primary">оформить заказ</button></a></p>
+		{% endfor %}
+    </div>
+  </div>
+</div>
+<br>
+{% endblock %}  
