@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h2>ИНГРИДИЕНТЫ</h2>
+
+	<ul>
+		{% for ingredient in ingredient_list|dictsort:"price" %}
+			<li>{{ ingredient.name|capfirst }}  {{ ingredient.price }} - <a href="/ingredientsedit/{{ ingredient.id }}/">изменить</a> </li>
+		{% endfor %}
+	</ul>
+
+	<ul>
+		{% if ingredient_list %}
+			Количество ингридиентов: {{ ingredient_list|length }}
+		{% else %}
+			Нет ингридиентов.
+		{% endif %}
+	</ul>
+
+	<ul>
+	{% include "ingredient_add.html" %}
+	</ul>
+
+{% endblock %}

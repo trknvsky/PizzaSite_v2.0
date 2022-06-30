@@ -1,0 +1,94 @@
+
+{% extends "base.html" %}
+
+{% block main %}
+
+<section class="home-slider owl-carousel img">
+  <div class="slider-item" style="background-image: url(/static/images/image_3.jpg);">
+      <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text justify-content-center align-items-center">
+              <div class="col-md-7 col-sm-12 text-center ftco-animate">
+                <h1 class="mb-3 mt-5 bread">Our Menu</h1>
+              </div>
+            </div>
+        </div>
+      </div>
+	</div>
+</section>
+
+<div class="container-wrap">
+  <div class="row no-gutters d-flex">
+    {% for dish in dish_list %}
+      <div class="col-lg-4 d-flex ftco-animate"">
+        <div class="services-wrap d-flex" ">
+          {% if dish.id == 21 or dish.id == 5 or dish.id == 19 or dish.id == 14 or dish.id == 24 or dish.id == 33 or dish.id == 16 or dish.id == 22 or dish.id == 18 or dish.id == 29 or dish.id == 35 or dish.id == 12 or dish.id == 27 or dish.id == 31 or dish.id == 25 or dish.id == 10 or dish.id == 17%}
+            <a href="#" class="img order-lg-last" style="background-image: url({{ dish.dish_img.url }});"></a>
+          {% else %}
+            <a href="#" class="img" style="background-image: url({{ dish.dish_img.url }});"></a>
+          {% endif %}
+            <div class="text p-4">
+              <h3>{{ dish.name }}</h3>
+              <p>{{ dish.alt }}</p>
+              <p class="price"><span>{{dish.price}}</span>
+              <form method="post" action="addpizza/">{% csrf_token %}
+              <input type="number" name="dish_id" value="{{ dish.id }}" hidden="dish.id">
+              <input type ="number" class="ml-2 btn btn-white btn-outline-white" name="count" value="{{ dish.count }}" style="width: 65px; height: 32px;">
+              <button type="submit" class="btn btn-primary" value="Order">В корзину</button>
+              </form>
+            </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div> 
+
+<div class="row mt-5">
+  <div class="col text-center">
+    <div class="block-27">
+      <ul>
+        {% if page_obj.has_previous %}
+        <li>
+          <a href="/dishes/?page={{ page_obj.previous_page_number }}">&laquo;</a>
+        </li>
+        {% endif %}
+        {% if page_obj.number == 1 %}
+        <li class="active">
+          <a href="/dishes/?page=1">1</a>
+        </li>
+        {% else %}
+        <li>
+          <a href="/dishes/?page=1">1</a>
+        </li>
+        {% endif %}
+        {% if page_obj.number == 2 %}
+        <li class="active">
+          <a href="/dishes/?page=2">2</a>
+        </li>
+        {% else %}
+        <li>
+          <a href="/dishes/?page=2">2</a>
+        </li>
+        {% endif %}
+        {% if page_obj.number == 3 %}
+        <li class="active">
+          <a href="/dishes/?page=3">3</a>
+        </li>
+        {% else %}
+        <li>
+          <a href="/dishes/?page=3">3</a>
+        </li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li>
+          <a href="/dishes/?page={{ page_obj.next_page_number }}">&raquo;</a>
+        </li>
+        {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<br>
+
+{% endblock %} 

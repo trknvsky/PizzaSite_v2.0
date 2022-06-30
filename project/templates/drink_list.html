@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+
+<div class="container-wrap">
+  <div class="row no-gutters d-flex">
+    {% for drink in drink_list %}
+      <div class="col-lg-4 d-flex ftco-animate"">
+        <div class="services-wrap d-flex" ">
+          {% if drink.id == 1 or drink.id == 2 or drink.id == 3 or drink.id == 8 or drink.id == 9 or drink.id == 10 or drink.id == 14%}
+            <a href="#" class="img order-lg-last" style="background-image: url({{ drink.drink_img.url }});"></a>
+          {% else %}
+            <a href="#" class="img" style="background-image: url({{ drink.drink_img.url }});"></a>
+            {% endif %}
+            <div class="text p-4">
+              <h3>{{ drink.name }} {{drink.id}}</h3>
+              <p>{{ drink.alt }}</p>
+              <p class="price"><span>{{dish.price}}</span>
+              <form method="post" action="/adddrink/">{% csrf_token %}
+              <input type="number" name="drink_id" value="{{ drink.id }}" hidden="drink.id">
+              <input type ="number" class="ml-2 btn btn-white btn-outline-white" name="count" value="{{ drink.count }}" style="width: 65px; height: 32px;">
+              <button type="submit" class="btn btn-primary" value="Order">В корзину</button>
+              </form>
+            </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div> 
+<br>
+{% endblock %}

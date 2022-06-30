@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block main %}
+<h2>БЛЮДА</h2>
+
+<nav aria-label="Page navigation example">
+	  <ul class="pagination">
+	    <li class="page-item"><a class="page-link" href="/dishes/?ordering=name">по алфавиту</a></li>
+	    <li class="page-item"><a class="page-link" href="/dishes/?ordering=price">от дешевых к дорогим</a></li>
+	    <li class="page-item"><a class="page-link" href="/dishes/?ordering=-price">от дорогих к дешевым</a></li>
+	  </ul>
+</nav>
+
+<div class="order_area">
+        <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="section_title mb-70">
+                            <h3>Popular Orders</h3>
+                        </div>
+                    </div>
+                </div>
+            <div class="row">
+            	{% for dish in dish_list %}
+                <div class="col-xl-4 col-md-6">
+                    <div class="single_order">
+                        <div class="order_thumb">
+                            <img class="myImage" src="{{ dish.dish_img.url }}">
+                            <div class="order_prise">
+                                <span>10.00</span>
+                            </div>
+                        </div>
+                        <div class="order_info">
+                            <h3>{{ dish.name }}</h3>
+                            <p>{% if dish.alt|length < 33 %}
+                            {{dish.alt}}<br><br><br>
+                            {%elif dish.alt|length < 78%}
+                            {{dish.alt}}<br><br>
+                            {%else%}
+                            {{dish.alt}}{{dish.alt|length}}
+                            {%endif%}                            </p>
+                            <a href="#" class="boxed_btn">Order Now!</a>
+                        </div>
+                    </div>
+                </div>
+	{% endfor %}
+</div>
+<div class="center">
+	<ul><nav aria-label="Page navigation example">
+	  <ul class="pagination">
+	    <li class="page-item"><a class="page-link" href="/dishes/?page=1">1</a></li>
+	    <li class="page-item"><a class="page-link" href="/dishes/?page=2">2</a></li>
+	    <li class="page-item"><a class="page-link" href="/dishes/?page=3">3</a></li>
+	  </ul>
+	</nav></ul>
+</div>
+
+{% endblock %}
